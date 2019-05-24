@@ -23,4 +23,8 @@ public class RentalService {
         return rentalRepository.findByUser_Username(username);
     }
 
+    public List<Rental> findByBikeSerialNumber (String serialNumber) {
+        return rentalRepository.findByBike_SerialNumber(serialNumber);
+    }
+
 }

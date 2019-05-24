@@ -37,8 +37,6 @@ public class BikeRepositoryTest {
             testEntityManager.persistAndFlush(bike);
         });
 
-//        given(bikeRepository.findAllByIsTaken(false)).willReturn(bikes);
-
         //when
         List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false);
 

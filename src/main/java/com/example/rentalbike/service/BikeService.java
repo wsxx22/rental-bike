@@ -18,9 +18,6 @@ public class BikeService {
     }
 
     public List<Bike> findAllByTakenIsFalse () {
-
-
-
         return bikeRepository.findAllByIsTaken(false);
     }
 

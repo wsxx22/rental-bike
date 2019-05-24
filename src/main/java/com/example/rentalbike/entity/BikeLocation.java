@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,12 +15,14 @@ import java.time.LocalDateTime;
 public class BikeLocation extends AbstractEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_rental")
     private Rental rental;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "id_bike")
     private Bike bike;
 
-    private LocalDateTime timeStamp;
+    private LocalDateTime timestamp;
 
     private String latitude;
 

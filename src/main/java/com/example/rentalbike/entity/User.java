@@ -28,6 +28,13 @@ public class User extends AbstractEntity {
     @JoinColumn(name = "id")
     private Set<Rental> rentals = new HashSet<>();
 
+    public User(Long id, String username, String password, String email) {
+        super(id);
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
