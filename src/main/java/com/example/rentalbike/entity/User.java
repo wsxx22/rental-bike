@@ -24,6 +24,7 @@ public class User extends AbstractEntity {
     @Column(unique = true)
     private String email;
 
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Set<Rental> rentals = new HashSet<>();

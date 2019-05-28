@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -31,11 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-
 @SpringBootTest
 @AutoConfigureMockMvc
-
-//@WebMvcTest(BikeController.class)
 public class BikeControllerTest {
 
     @Autowired
@@ -48,30 +46,14 @@ public class BikeControllerTest {
     public void shouldReturnBikeDtoWhenTakenIsFalse() throws Exception {
 
         //given
-
         List<Bike> bikes = prepareBikeDtoList();
         given(bikeService.findAllByTakenIsFalse()).willReturn(bikes);
 
         mockMvc.perform(get("/bikes/no-taken"))
                 .andExpect(status().isOk())
-
-//                .andExpect(content().json(
-//                        "[{\"id\":1,\"serialNumber\":\"AB123\",\"taken\":false}," +
-//                                    "{\"id\":2,\"serialNumber\":\"ZC553\",\"taken\":false}]"))
                 .andDo(print());
 
         verify(bikeService).findAllByTakenIsFalse();
-    }
-
-    @Test
-    public void shouldReturnHello() throws Exception {
-        given(bikeService.hello()).willReturn("bye");
-
-        mockMvc.perform(get("/bikes/hello"))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().string(CoreMatchers.containsString("bye")));
-
     }
 
     private List<Bike> prepareBikeDtoList() {
