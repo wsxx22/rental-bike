@@ -45,7 +45,7 @@ public class UserControllerTest {
         User user = new User("janek22", "janek", "janek2@wp.pl");
         when(userService.addUser(user)).thenReturn(user);
 
-        mockMvc.perform(post("/users/add")
+        mockMvc.perform(post("/users/")
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(toJSON(user)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("{\"id\":null,\"username\":\"janek22\",\"email\":\"janek2@wp.pl\"}")))
