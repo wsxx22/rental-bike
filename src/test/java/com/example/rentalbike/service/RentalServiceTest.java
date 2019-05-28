@@ -22,6 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,16 +44,15 @@ public class RentalServiceTest {
         Rental rental = new Rental(user, bike, LocalDateTime.now(), LocalDateTime.now(), "11.111",
                 "15.222", "20.000", "19.400", "50");
         RentalRepository rentalRepository = mock(RentalRepository.class);
-//        RentalService rentalService = new RentalService(rentalRepository);
+        RentalService rentalService = new RentalService(rentalRepository);
 
         given(rentalRepository.findByUser_Username("janek22")).willReturn(List.of(rental));
-//        given(rentalRepository.findByUser_Username(anyString())).willReturn(Optional.of(rental));
 
-        //when
-//        List<Rental> rentalResult = rentalService.findByUsername("janek22");
+//        when
+        List<Rental> rentalResult = rentalService.findByUsername("janek22");
 
-        //then
-//        assertThat(rentalResult, hasSize(1));
+//        then
+        assertThat(rentalResult, hasSize(1));
         verify(rentalRepository).findByUser_Username("janek22");
     }
 
@@ -76,24 +76,6 @@ public class RentalServiceTest {
         //then
 //        assertThat(rentalResult, hasSize(0));
     }
-
-    @Test
-    public void bikeShouldBeTakenAfterRental () {
-
-        //given
-        User user = new User("janek22", "janek123", "janek@wp.pl");
-        Bike bike = new Bike("BA1234", false);
-        Rental rental = new Rental(user, bike, LocalDateTime.now(), LocalDateTime.now(), "11.111",
-                "15.222", "20.000", "19.400", "50");
-
-        //when
-        //then
-        assertTrue(bike.isTaken());
-    }
-
-
-
-
 
 
 }

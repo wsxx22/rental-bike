@@ -14,7 +14,7 @@ public class RentalBikeApplicationTests {
 
     @Test
     public void contextLoads() {
-
+        assertTrue(true);
     }
 
 }

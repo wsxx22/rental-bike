@@ -9,12 +9,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)
@@ -56,6 +58,47 @@ public class BikeRepositoryTest {
         Assert.assertTrue(bikeResult.isPresent());
         assertEquals("AB123", bikeResult.get().getSerialNumber());
 //        assertEq(bikeResult.isPresent(), true);
+    }
+    @Test
+    public void shouldUpdateParamsBike() {
+
+        Bike bike = new Bike("BA1234", false);
+        testEntityManager.persistAndFlush(bike);
+
+        bike.setSerialNumber("AA555");
+        testEntityManager.persistAndFlush(bike);
+
+        assertEquals("AA555", bike.getSerialNumber());
+
+    }
+
+    @Test
+    public void shouldDeleteBikeFromDatabase() {
+
+        //given
+        Bike bike = new Bike("BA1234", false);
+        testEntityManager.persistAndFlush(bike);
+
+        //when
+        testEntityManager.remove(bike);
+        Optional<Bike> bikeResult = bikeRepository.findById(bike.getId());
+        List<Bike> bikes = bikeRepository.findAll();
+
+        assertFalse(bikeResult.isPresent());
+        assertThat(bikes, hasSize(0));
+    }
+
+    @Test
+    public void shouldThrowExceptionAfterSaveSameBike() {
+
+        Bike bike = new Bike("BA1234", false);
+        Bike bike2 = new Bike("BA1234", false);
+
+        testEntityManager.persistAndFlush(bike);
+
+        assertThrows(PersistenceException.class, () -> {
+            testEntityManager.persistAndFlush(bike2);
+        });
     }
 
     private List<Bike> prepareListBikesInRental() {

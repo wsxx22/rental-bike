@@ -27,4 +27,10 @@ public class Bike extends AbstractEntity {
         this.serialNumber = serialNumber;
         this.isTaken = isTaken;
     }
+
+//    public Bike(Long id, String serialNumber, boolean isTaken) {
+//        super(id);
+//        this.serialNumber = serialNumber;
+//        this.isTaken = isTaken;
+//    }
 }

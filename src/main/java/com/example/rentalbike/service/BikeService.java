@@ -21,4 +21,7 @@ public class BikeService {
         return bikeRepository.findAllByIsTaken(false);
     }
 
+    public String hello() {
+        return "hello";
+    }
 }

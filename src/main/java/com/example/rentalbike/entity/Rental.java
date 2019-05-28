@@ -1,5 +1,6 @@
 package com.example.rentalbike.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Table(name = "rentals")
 public class Rental extends AbstractEntity {
@@ -33,21 +35,5 @@ public class Rental extends AbstractEntity {
     private String endLongitude;
 
     private String totalPrice;
-
-    public Rental(User user, Bike bike, LocalDateTime startedAt, LocalDateTime finishedAt,
-                  String startLatitude, String startLongitude, String endLatitude,
-                  String endLongitude, String totalPrice) {
-        this.user = user;
-        this.bike = bike;
-        this.startedAt = startedAt;
-        this.finishedAt = finishedAt;
-        this.startLatitude = startLatitude;
-        this.startLongitude = startLongitude;
-        this.endLatitude = endLatitude;
-        this.endLongitude = endLongitude;
-        this.totalPrice = totalPrice;
-
-        bike.setTaken(true);
-    }
 
 }

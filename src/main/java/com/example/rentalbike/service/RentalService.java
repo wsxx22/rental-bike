@@ -24,6 +24,7 @@ public class RentalService {
     }
 
     public List<Rental> findByBikeSerialNumber (String serialNumber) {
+
         return rentalRepository.findByBike_SerialNumber(serialNumber);
     }
 

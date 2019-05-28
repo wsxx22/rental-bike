@@ -39,8 +39,6 @@ public class BikeLocationTest {
         Optional<BikeLocation> bikeLocationResult = bikeLocationRepository.findById(bikeLocation.getId());
 
         assertTrue(bikeLocationResult.isPresent());
-
-
     }
 
 }
