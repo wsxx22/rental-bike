@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private CustomUserDetailsService customUserDetailsService;
@@ -36,13 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .antMatchers("/**").hasRole("ADMIN")
-                .antMatchers("/users/{username}").authenticated()
                 .anyRequest().denyAll()
                 .and()
-                .csrf().disable()
+                .csrf().disable()  //postman
                 .headers().frameOptions().disable()
                 .and()
                 .httpBasic();
