@@ -29,6 +29,12 @@ public class User extends AbstractEntity {
     @JoinColumn(name = "id")
     private Set<Rental> rentals = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        @JoinTable(name = "user_roles",
+                joinColumns = @JoinColumn(name = "id_user"),
+                inverseJoinColumns = @JoinColumn(name = "id_role"))
+    private Set<Role> roles = new HashSet<>();
+
     public User(Long id, String username, String password, String email) {
         super(id);
         this.username = username;

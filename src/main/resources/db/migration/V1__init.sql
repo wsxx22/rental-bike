@@ -11,6 +11,20 @@ create table users (
   email varchar(20) unique not null
 );
 
+create table roles (
+    id bigint auto_increment primary key ,
+    role varchar(20) unique not null
+);
+
+create table user_roles (
+    id_user bigint not null ,
+    id_role bigint not null ,
+
+    foreign key (id_user) references users(id),
+    foreign key (id_role) references roles(id),
+    primary key (id_user, id_role)
+);
+
 create table rentals (
   id bigint auto_increment primary key ,
   id_user bigint not null ,
