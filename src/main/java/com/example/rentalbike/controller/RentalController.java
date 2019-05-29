@@ -30,10 +30,10 @@ public class RentalController {
         return rentalMapper.toDtoList(rentalService.findByUsername(username));
     }
 
-//    @GetMapping("/{serialNumber}")
-//    public List<RentalDto> findByBikeSerialNumber (@PathVariable String serialNumber){
-//        return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
-//    }
+    @GetMapping("/{serialNumber}")
+    public List<RentalDto> findByBikeSerialNumber (@PathVariable String serialNumber){
+        return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
+    }
 
 
 
