@@ -7,6 +7,8 @@ import com.example.rentalbike.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -29,6 +31,11 @@ public class UserController {
     public UserDto updateUser (@PathVariable String username, @RequestBody User user) {
 
         return userMapper.toDto(userService.update(username, user));
+    }
+
+    @GetMapping
+    public List<UserDto> findAll () {
+        return userMapper.toDtoList(userService.findAll());
     }
 
 }

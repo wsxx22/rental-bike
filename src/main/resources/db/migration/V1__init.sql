@@ -7,8 +7,12 @@ create table bikes (
 create table users (
   id bigint auto_increment primary key,
   username varchar(30) not null unique ,
-  password varchar(20) not null ,
-  email varchar(20) unique not null
+  password varchar(64) not null ,
+  email varchar(20) unique not null,
+  is_expired boolean,
+  is_locked boolean ,
+  is_credentials_expired boolean ,
+  is_enabled boolean
 );
 
 create table roles (

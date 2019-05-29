@@ -1,18 +1,19 @@
 package com.example.rentalbike.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "users")
 public class User extends AbstractEntity {
 
@@ -23,6 +24,16 @@ public class User extends AbstractEntity {
 
     @Column(unique = true)
     private String email;
+
+    @Column(name = "is_expired")
+    private boolean isAccountExpired;
+
+    @Column(name = "is_locked")
+    private boolean isAccountLocked;
+
+    private boolean isCredentialsExpired;
+
+    private boolean isEnabled;
 
 
     @OneToMany(cascade = CascadeType.ALL)
