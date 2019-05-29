@@ -29,7 +29,7 @@ public class UserService {
 
     public User update(String username, User user) {
 
-        User u = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFound());
+        User u = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         u.setUsername(user.getUsername() == null ? u.getUsername() : user.getUsername());
         u.setEmail(user.getEmail() == null ? u.getEmail() : user.getEmail());
