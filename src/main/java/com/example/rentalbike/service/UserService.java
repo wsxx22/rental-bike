@@ -34,7 +34,10 @@ public class UserService {
         u.setUsername(user.getUsername() == null ? u.getUsername() : user.getUsername());
         u.setEmail(user.getEmail() == null ? u.getEmail() : user.getEmail());
         u.setPassword(user.getPassword() == null ? u.getPassword() : user.getPassword());
-        u.setAccountExpired((Boolean)user.isAccountExpired() == null ? u.isAccountExpired() : user.isAccountExpired());
+        u.setIsAccountExpired(user.getIsAccountExpired() == null ? u.getIsAccountExpired() : user.getIsAccountExpired());
+        u.setIsAccountLocked(user.getIsAccountLocked() == null ? u.getIsAccountLocked() : user.getIsAccountLocked());
+        u.setIsCredentialsExpired(user.getIsCredentialsExpired() == null ? u.getIsCredentialsExpired() : user.getIsCredentialsExpired());
+        u.setIsEnabled(user.getIsEnabled() == null ? u.getIsEnabled() : user.getIsEnabled());
 
         return userRepository.save(u);
 

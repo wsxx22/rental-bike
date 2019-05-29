@@ -26,14 +26,14 @@ public class User extends AbstractEntity {
     private String email;
 
     @Column(name = "is_expired")
-    private boolean isAccountExpired;
+    private Boolean isAccountExpired;
 
     @Column(name = "is_locked")
-    private boolean isAccountLocked;
+    private Boolean isAccountLocked;
 
-    private boolean isCredentialsExpired;
+    private Boolean isCredentialsExpired;
 
-    private boolean isEnabled;
+    private Boolean isEnabled;
 
 
     @OneToMany(cascade = CascadeType.ALL)
