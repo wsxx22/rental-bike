@@ -28,9 +28,5 @@ public class BikeController {
         return bikeMapper.toDtoList(bikeService.findAllByTakenIsFalse());
     }
 
-    @GetMapping("/hello")
-    public String find () {
-        return bikeService.hello();
-    }
 
 }
