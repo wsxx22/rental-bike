@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
                 .and()
-                .csrf().disable()  //postman
+                .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                 .httpBasic();
