@@ -1,4 +1,4 @@
-package com.example.rentalbike.customDetails;
+package com.example.rentalbike.app.security;
 
 import com.example.rentalbike.entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getPassword();
+        return user.getUsername();
     }
 
     @Override

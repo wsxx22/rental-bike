@@ -29,22 +29,22 @@ public class BikeRepositoryTest {
     private BikeRepository bikeRepository;
 
 
-    @Test
-    public void shouldReturnBikeWhenTakenIsFalse() {
-
-        //given
-        List<Bike> bikes = prepareListBikesInRental();
-
-        bikes.forEach(bike -> {
-            testEntityManager.persistAndFlush(bike);
-        });
-
-        //when
-        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false);
-
-        //then
-        assertThat(bikeResult, hasSize(2));
-    }
+//    @Test
+//    public void shouldReturnBikeWhenTakenIsFalse() {
+//
+//        //given
+//        List<Bike> bikes = prepareListBikesInRental();
+//
+//        bikes.forEach(bike -> {
+//            testEntityManager.persistAndFlush(bike);
+//        });
+//
+//        //when
+//        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false);
+//
+//        //then
+//        assertThat(bikeResult, hasSize(2));
+//    }
 
     @Test
     public void shouldSaveBike() {

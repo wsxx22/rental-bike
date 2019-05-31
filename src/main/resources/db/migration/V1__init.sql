@@ -1,7 +1,7 @@
 create table bikes (
     id bigint auto_increment primary key,
     serial_number varchar(30) not null unique,
-    is_taken boolean not null
+    is_taken boolean not null default false
 );
 
 create table users (

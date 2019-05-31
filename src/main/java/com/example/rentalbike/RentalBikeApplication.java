@@ -3,6 +3,9 @@ package com.example.rentalbike;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class RentalBikeApplication {
 
@@ -10,5 +13,6 @@ public class RentalBikeApplication {
         SpringApplication.run(RentalBikeApplication.class, args);
 
     }
+
 
 }

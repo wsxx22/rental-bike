@@ -1,7 +1,6 @@
-package com.example.rentalbike.service;
+package com.example.rentalbike.app.security;
 
 
-import com.example.rentalbike.customDetails.CustomUserDetails;
 import com.example.rentalbike.entity.User;
 import com.example.rentalbike.exception.UserNotFound;
 import com.example.rentalbike.repository.UserRepository;

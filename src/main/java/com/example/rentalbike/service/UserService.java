@@ -4,6 +4,7 @@ import com.example.rentalbike.entity.User;
 import com.example.rentalbike.exception.UserNotFound;
 import com.example.rentalbike.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAll () {
-        return userRepository.findAll();
+    public List<User> findAll (Pageable pageable) {
+        return userRepository.findAll(pageable).getContent();
     }
 
     public User update(String username, User user) {
@@ -43,4 +44,7 @@ public class UserService {
 
     }
 
+    public long deleteByUsername(String username) {
+        return userRepository.deleteByUsername(username);
+    }
 }

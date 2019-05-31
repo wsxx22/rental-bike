@@ -3,6 +3,7 @@ package com.example.rentalbike.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,8 @@ import java.util.Set;
 @Table(name = "bikes")
 public class Bike extends AbstractEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
+    @NotBlank
     private String serialNumber;
 
     private boolean isTaken;

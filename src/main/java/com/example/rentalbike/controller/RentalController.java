@@ -5,10 +5,8 @@ import com.example.rentalbike.entity.Rental;
 import com.example.rentalbike.mapper.RentalMapper;
 import com.example.rentalbike.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +31,16 @@ public class RentalController {
     @GetMapping("/{serialNumber}")
     public List<RentalDto> findByBikeSerialNumber (@PathVariable String serialNumber){
         return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
+    }
+
+    @PostMapping
+    public RentalDto add (@RequestBody Rental rental) {
+        return rentalMapper.toDto(rentalService.save(rental));
+    }
+
+    @GetMapping
+    public List<RentalDto> findAll (Pageable pageable) {
+        return rentalMapper.toDtoList(rentalService.findAll(pageable));
     }
 
 
