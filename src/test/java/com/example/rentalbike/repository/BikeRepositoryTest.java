@@ -3,10 +3,12 @@ package com.example.rentalbike.repository;
 import com.example.rentalbike.entity.Bike;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.PersistenceException;
@@ -15,8 +17,10 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)
@@ -28,23 +32,30 @@ public class BikeRepositoryTest {
     @Autowired
     private BikeRepository bikeRepository;
 
+    private Pageable pageRequest;
 
-//    @Test
-//    public void shouldReturnBikeWhenTakenIsFalse() {
-//
-//        //given
-//        List<Bike> bikes = prepareListBikesInRental();
-//
-//        bikes.forEach(bike -> {
-//            testEntityManager.persistAndFlush(bike);
-//        });
-//
-//        //when
-//        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false);
-//
-//        //then
-//        assertThat(bikeResult, hasSize(2));
-//    }
+    @BeforeAll
+    public void setup() {
+        pageRequest = mock(Pageable.class);
+    }
+
+
+    @Test
+    public void shouldReturnBikeWhenTakenIsFalse() {
+
+        //given
+        List<Bike> bikes = prepareListBikesInRental();
+
+        bikes.forEach(bike -> {
+            testEntityManager.persistAndFlush(bike);
+        });
+
+        //when
+        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false, pageRequest);
+
+        //then
+        assertThat(bikeResult, hasSize(2));
+    }
 
     @Test
     public void shouldSaveBike() {

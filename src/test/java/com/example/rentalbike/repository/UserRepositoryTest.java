@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     @Test
     public void shouldSaveNewUserToDatabase() {
 
-        User user = new User("janek22", "janek2", "janek@wp.pl");
+        User user = new User("janek22", "janek2", "janek22@wp.pl");
         testEntityManager.persistAndFlush(user);
 
         Optional<User> userResult = userRepository.findById(user.getId());
@@ -38,8 +38,8 @@ public class UserRepositoryTest {
     @Test
     public void shouldTroughExceptioAfterSaveExistsUsername() {
 
-        User user = new User("janek22", "janek2", "janek@wp.pl");
-        User user2 = new User("janek22", "janek2", "janek@wp.pl");
+        User user = new User("janek22", "janek2", "janek22@wp.pl");
+        User user2 = new User("janek22", "janek2", "janek22@wp.pl");
         testEntityManager.persistAndFlush(user);
 
         assertThrows(PersistenceException.class, () -> {

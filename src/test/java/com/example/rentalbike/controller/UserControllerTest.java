@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -40,15 +41,16 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void shouldReturnUserDtoAfterSave() throws Exception {
 
-        User user = new User("janek22", "janek", "janek2@wp.pl");
-        when(userService.addUser(user)).thenReturn(user);
+        User user = new User(1L,"janek22", "janek", "janek2@wp.pl");
+        given(userService.addUser(user)).willReturn(user);
 
         mockMvc.perform(post("/users/")
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(toJSON(user)))
+                .contentType(MediaType.APPLICATION_JSON).content(toJSON(user)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":null,\"username\":\"janek22\",\"email\":\"janek2@wp.pl\"}")))
+//                .andExpect(content().string(containsString("{\"id\":1,\"username\":\"janek22\",\"email\":\"janek2@wp.pl\"}")))
                 .andDo(print());
 
 

@@ -16,19 +16,25 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Enumeration;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +50,7 @@ public class RentalControllerTest {
     private RentalService rentalService;
 
     @Test
+    @WithMockUser(username = "janek", password = "janek22", roles = "USER")
     public void shouldReturnRentalByUsername() throws Exception {
 
         User user = new User(1L,"janek22", "janek", "janek2@wp.pl");
@@ -51,17 +58,14 @@ public class RentalControllerTest {
         LocalDateTime dateTime = LocalDateTime.of(2019,5,24,1,0,0);
         Rental rental = new Rental(user, bike, dateTime , dateTime,
                 "22.222", "33.444", "33.444", "33.444", "33.444" );
-        given(rentalService.findByUsername(anyString())).willReturn(Collections.singletonList(rental));
+        given(rentalService.findByUsername(user.getUsername())).willReturn(Collections.singletonList(rental));
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String content = objectMapper.writeValueAsString(user);
-
-        mockMvc.perform(get("/rental/" + user.getUsername()))
-//                .contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8_VALUE)
-//                .content(content))
+        mockMvc.perform(get("/rentals/username/{username}", user.getUsername()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
 
+//        String asd = mvcResult.getRequest().getUserPrincipal().getName();
+//        System.out.println("asd " + mvcResult.getRequest().);
     }
 }

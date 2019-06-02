@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rental")
+@RequestMapping("/rentals")
 public class RentalController {
 
     private RentalService rentalService;
@@ -23,15 +23,16 @@ public class RentalController {
         this.rentalMapper = rentalMapper;
     }
 
-    @GetMapping("/{username}")
-    public List<RentalDto> findByUsername (@PathVariable String username){
+    @GetMapping(value = "/username/{username}")
+    public List<RentalDto> findByUsername (@PathVariable("username") String username){
         return rentalMapper.toDtoList(rentalService.findByUsername(username));
     }
 
-    @GetMapping("/{serialNumber}")
-    public List<RentalDto> findByBikeSerialNumber (@PathVariable String serialNumber){
+    @GetMapping("/serial-number/{serialNumber}")
+    public List<RentalDto> findByBikeSerialNumber (@PathVariable("serialNumber") String serialNumber){
         return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
     }
+
 
     @PostMapping
     public RentalDto add (@RequestBody Rental rental) {

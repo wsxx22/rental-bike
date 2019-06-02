@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
 
     //private CurrentUser currentUser;
@@ -27,7 +27,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public UserDto addUser(@RequestBody User user) {
         return userMapper.toDto(userService.addUser(user));
     }
@@ -38,7 +38,7 @@ public class UserController {
         return userMapper.toDto(userService.update(username, user));
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserDto> findAll (Pageable pageable) {
         return userMapper.toDtoList(userService.findAll(pageable));
     }
@@ -48,9 +48,9 @@ public class UserController {
         return userService.deleteByUsername(username);
     }
 
-    @GetMapping("/user")
-    public String findByCurrentUser () {
-        return SecurityUtils.getUsername();
-    }
+//    @GetMapping("/user")
+//    public String findByCurrentUser () {
+//        return SecurityUtils.getUsername();
+//    }
 
 }

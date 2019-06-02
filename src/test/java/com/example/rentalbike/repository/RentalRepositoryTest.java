@@ -33,7 +33,7 @@ public class RentalRepositoryTest {
     @Test
     public void newUserShouldReturnNoRentals() {
 
-        User user = new User("janek33", "janek", "janek@wp.pl");
+        User user = new User("janek33", "janek", "janek33@wp.pl");
         testEntityManager.persistAndFlush(user);
 
         List<Rental> rentals = rentalRepository.findByUser_Username(user.getUsername());
