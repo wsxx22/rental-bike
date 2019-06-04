@@ -6,8 +6,10 @@ import com.example.rentalbike.mapper.BikeMapper;
 import com.example.rentalbike.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class BikeController {
     }
 
     @GetMapping
-    public List<BikeDto> findAll (Pageable pageable) {
+    public List<BikeDto> findAll ( Pageable pageable) {
         return bikeMapper.toDtoList(bikeService.findAll(pageable));
     }
 

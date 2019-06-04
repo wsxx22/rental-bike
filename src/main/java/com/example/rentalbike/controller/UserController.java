@@ -1,7 +1,6 @@
 package com.example.rentalbike.controller;
 
-import com.example.rentalbike.app.security.CurrentUser;
-import com.example.rentalbike.app.security.SecurityUtils;
+
 import com.example.rentalbike.dto.UserDto;
 import com.example.rentalbike.entity.User;
 import com.example.rentalbike.mapper.UserMapper;

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,8 @@ public class BikeService {
     }
 
     public List<Bike> findAll(Pageable pageable) {
+
+
         return bikeRepository.findAll(pageable).getContent();
     }
 

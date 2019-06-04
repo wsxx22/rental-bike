@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class RentalController {
 
     @GetMapping(value = "/username/{username}")
     public List<RentalDto> findByUsername (@PathVariable("username") String username){
-        return rentalMapper.toDtoList(rentalService.findByUsername(username));
+        return rentalMapper.toDtoList(rentalService.findByUsername( username));
     }
 
     @GetMapping("/serial-number/{serialNumber}")

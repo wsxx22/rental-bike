@@ -29,15 +29,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public CurrentUser currentUser(UserRepository userRepository) {
-        String username = SecurityUtils.getUsername();
-        User user =
-                username != null ? userRepository.findByUsername(username).get() : null;
-
-        return () -> user;
-    }
+//    @Bean
+//    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//    public CurrentUser currentUser(UserRepository userRepository) {
+//        String username = SecurityUtils.getUsername();
+//        User user =
+//                username != null ? userRepository.findByUsername(username).get() : null;
+//
+//        return () -> user;
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

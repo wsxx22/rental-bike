@@ -58,7 +58,7 @@ public class RentalControllerTest {
         LocalDateTime dateTime = LocalDateTime.of(2019,5,24,1,0,0);
         Rental rental = new Rental(user, bike, dateTime , dateTime,
                 "22.222", "33.444", "33.444", "33.444", "33.444" );
-        given(rentalService.findByUsername(user.getUsername())).willReturn(Collections.singletonList(rental));
+//        given(rentalService.findByUsername(user.getUsername())).willReturn(Collections.singletonList(rental));
 
         mockMvc.perform(get("/rentals/username/{username}", user.getUsername()))
                 .andExpect(status().isOk())
