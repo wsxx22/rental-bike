@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class RentalController {
@@ -37,12 +35,12 @@ public class RentalController {
         return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
     }
 
-    @PostMapping
+    @PostMapping("/rental")
     public RentalDto add (@RequestBody Rental rental) {
-        return rentalMapper.toDto(rentalService.save(rental));
+        return rentalMapper.toDto(rentalService.add(rental));
     }
 
-    @GetMapping
+    @GetMapping("/rentals")
     public List<RentalDto> findAll (Pageable pageable) {
         return rentalMapper.toDtoList(rentalService.findAll(pageable));
     }

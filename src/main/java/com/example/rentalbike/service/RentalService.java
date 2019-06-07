@@ -22,13 +22,6 @@ public class RentalService {
         this.rentalRepository = rentalRepository;
     }
 
-    public List<Rental> findByUsername () {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        return rentalRepository.findByUser_Username(auth.getName());
-    }
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Collection<Rental> findByBikeSerialNumber (String serialNumber) {
 
@@ -36,7 +29,7 @@ public class RentalService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username")
-    public Rental save(Rental rental) {
+    public Rental add (Rental rental) {
         return rentalRepository.save(rental);
     }
 

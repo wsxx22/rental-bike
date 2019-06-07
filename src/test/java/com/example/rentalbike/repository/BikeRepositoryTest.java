@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.PersistenceException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class BikeRepositoryTest {
         });
 
         //when
-        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false, pageRequest);
+        Collection<Bike> bikeResult = bikeRepository.findAllByIsTaken(false, pageRequest);
 
         //then
         assertThat(bikeResult, hasSize(2));

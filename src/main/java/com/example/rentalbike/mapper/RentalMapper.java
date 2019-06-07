@@ -8,7 +8,6 @@ import org.mapstruct.Mappings;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface RentalMapper {
