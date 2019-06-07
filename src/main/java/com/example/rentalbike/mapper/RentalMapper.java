@@ -6,7 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface RentalMapper {
@@ -17,5 +19,5 @@ public interface RentalMapper {
     })
     RentalDto toDto (Rental rental);
 
-    List<RentalDto> toDtoList (List<Rental> rentals);
+    List<RentalDto> toDtoList (Collection<Rental> rentals);
 }

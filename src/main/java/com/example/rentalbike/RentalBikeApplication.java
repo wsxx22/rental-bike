@@ -9,8 +9,11 @@ import java.util.List;
 @SpringBootApplication
 public class RentalBikeApplication {
 
+
+
     public static void main(String[] args) {
         SpringApplication.run(RentalBikeApplication.class, args);
+
 
     }
 

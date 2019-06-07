@@ -1,8 +1,6 @@
 package com.example.rentalbike.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +8,8 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "bike_locations")
 public class BikeLocation extends AbstractEntity {
 
@@ -27,5 +26,10 @@ public class BikeLocation extends AbstractEntity {
     private String latitude;
 
     private String longitude;
+
+    // wyswietlic trase danego wypozyczenia ,pageable
+    // --       historie lokalizacji roweru, pageable
+    // pageable max 50
+    //specification
 
 }

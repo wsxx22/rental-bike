@@ -1,5 +1,6 @@
 package com.example.rentalbike.controller;
 
+import com.example.rentalbike.app.security.CurrentUser;
 import com.example.rentalbike.dto.RentalDto;
 import com.example.rentalbike.entity.Rental;
 import com.example.rentalbike.mapper.RentalMapper;
@@ -10,30 +11,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("/rentals")
 public class RentalController {
 
     private RentalService rentalService;
     private RentalMapper rentalMapper;
+    private CurrentUser currentUser;
 
     @Autowired
-    public RentalController(RentalService rentalService, RentalMapper rentalMapper) {
+    public RentalController(RentalService rentalService, RentalMapper rentalMapper, CurrentUser currentUser) {
         this.rentalService = rentalService;
         this.rentalMapper = rentalMapper;
+        this.currentUser = currentUser;
     }
 
-    @GetMapping(value = "/username/{username}")
-    public List<RentalDto> findByUsername (@PathVariable("username") String username){
-        return rentalMapper.toDtoList(rentalService.findByUsername( username));
+    @GetMapping(value = "/user/rentals")
+    public List<RentalDto> getAuthenticatedUserRentals(){
+        return rentalMapper.toDtoList(currentUser.getUser().getRentals());
     }
 
-    @GetMapping("/serial-number/{serialNumber}")
+    @GetMapping("/rentals/{serialNumber}")
     public List<RentalDto> findByBikeSerialNumber (@PathVariable("serialNumber") String serialNumber){
         return rentalMapper.toDtoList(rentalService.findByBikeSerialNumber(serialNumber));
     }
-
 
     @PostMapping
     public RentalDto add (@RequestBody Rental rental) {

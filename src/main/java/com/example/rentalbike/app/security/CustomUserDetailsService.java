@@ -2,7 +2,7 @@ package com.example.rentalbike.app.security;
 
 
 import com.example.rentalbike.entity.User;
-import com.example.rentalbike.exception.UserNotFound;
+import com.example.rentalbike.exception.UserNotFoundException;
 import com.example.rentalbike.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
 
         return new CustomUserDetails(user);
     }

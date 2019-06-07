@@ -1,14 +1,14 @@
 package com.example.rentalbike.service;
 
 import com.example.rentalbike.entity.User;
-import com.example.rentalbike.exception.UserNotFound;
+import com.example.rentalbike.exception.UserNotFoundException;
 import com.example.rentalbike.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,9 +28,10 @@ public class UserService {
         return userRepository.findAll(pageable).getContent();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
     public User update(String username, User user) {
 
-        User u = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
+        User u = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
 
         u.setUsername(user.getUsername() == null ? u.getUsername() : user.getUsername());
         u.setEmail(user.getEmail() == null ? u.getEmail() : user.getEmail());
@@ -44,6 +45,7 @@ public class UserService {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
     public long deleteByUsername(String username) {
         return userRepository.deleteByUsername(username);
     }

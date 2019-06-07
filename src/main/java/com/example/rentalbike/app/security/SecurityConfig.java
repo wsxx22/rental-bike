@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -29,16 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
     }
 
-//    @Bean
-//    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-//    public CurrentUser currentUser(UserRepository userRepository) {
-//        String username = SecurityUtils.getUsername();
-//        User user =
-//                username != null ? userRepository.findByUsername(username).get() : null;
-//
-//        return () -> user;
-//    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
@@ -46,13 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/bikes/**", "/users/**", "/rentals/**")
-                            .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/**")
-                            .hasRole("ADMIN")
+                .antMatchers("/**").permitAll()
                 .anyRequest()
-                            .denyAll()
+                            .authenticated()
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
