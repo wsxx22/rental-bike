@@ -1,6 +1,7 @@
 package com.example.rentalbike.service;
 
 import com.example.rentalbike.app.security.CurrentUser;
+import com.example.rentalbike.dto.BikeLocationDto;
 import com.example.rentalbike.entity.BikeLocation;
 import com.example.rentalbike.entity.Rental;
 import com.example.rentalbike.exception.RentalNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,25 +31,32 @@ public class BikeLocationService {
         this.currentUser = currentUser;
     }
 
-    @PreAuthorize(value = "hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
     public Collection<BikeLocation> findAllByRentalUserUsername (String username){
 
         return bikeLocationRepository.findAllByRental_User_Username(currentUser.getUser().getUsername());
     }
 
-    @PreAuthorize(value = "hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
-    public List<BikeLocation> findAllByRentalIdAndUserUsername (Pageable pageable, Long id, String username){
-
-        rentalRepository.findById(id).orElseThrow(() -> new RentalNotFoundException());
-
-        return bikeLocationRepository.findAllByRental_IdAndRental_User_Username(id, username, pageable);
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username")
+    public List<BikeLocation> findAllByRental (Rental rental, Pageable pageable){
+        return bikeLocationRepository.findAllByRental_Id(rental.getId(), pageable);
     }
 
-    @PreAuthorize(value = "hasRole('ROLE_ADMIN') or #username == authentication.principal.username")
-    public Collection<BikeLocation> findAllBySerialNumber (String serialNumber, String username) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Collection<BikeLocation> findAllBySerialNumber (String serialNumber, Pageable pageable) {
 
-        return bikeLocationRepository.findAllByBike_SerialNumberAndRental_User_Username(
-                serialNumber, currentUser.getUser().getUsername());
+        return bikeLocationRepository.findAllByBike_SerialNumber(
+                serialNumber, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_BIKE')")
+    public BikeLocation add(BikeLocation bikeLocation) {
+        return bikeLocationRepository.save(bikeLocation);
+    }
+
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void remove(Long id) {
+        bikeLocationRepository.deleteById(id);
+    }
 }

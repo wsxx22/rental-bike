@@ -13,7 +13,9 @@ public @interface MyPageable {
 
     int size() default 10;
 
-    int maxSize() default 15;
+    int minSize() default 10;
+
+    int maxSize() default 50;
 
     int page() default 0;
 

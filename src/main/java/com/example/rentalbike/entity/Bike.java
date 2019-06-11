@@ -21,7 +21,7 @@ public class Bike extends AbstractEntity {
 
     private boolean isTaken;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
     private Set<Rental> rentals = new HashSet<>();
 
@@ -35,4 +35,5 @@ public class Bike extends AbstractEntity {
 //        this.serialNumber = serialNumber;
 //        this.isTaken = isTaken;
 //    }
+
 }

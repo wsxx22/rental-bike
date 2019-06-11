@@ -15,7 +15,6 @@ public interface BikeLocationMapper {
     @Mappings({
             @Mapping(target = "rentalId", source = "rental.id"),
             @Mapping(target = "bikeSerialNumber", source = "bike.serialNumber"),
-            @Mapping(target = "timeStamp", source = "timestamp")
     })
     BikeLocationDto toDto (BikeLocation bikeLocation);
 

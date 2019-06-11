@@ -37,4 +37,9 @@ public class RentalService {
     public List<Rental> findAll(Pageable pageable) {
         return rentalRepository.findAll(pageable).getContent();
     }
+
+    public Rental findById(Long id) {
+        return rentalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
+    }
 }

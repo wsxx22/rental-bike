@@ -17,7 +17,7 @@ public class BikeLocation extends AbstractEntity {
     @JoinColumn(name = "id_rental")
     private Rental rental;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_bike")
     private Bike bike;
 

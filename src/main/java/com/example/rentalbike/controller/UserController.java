@@ -53,4 +53,8 @@ public class UserController {
         return userMapper.toAuthenticatedDto(currentUser.getUser());
     }
 
+    //user delete
+
+    //user patch
+
 }

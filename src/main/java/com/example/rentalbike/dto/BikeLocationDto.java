@@ -19,7 +19,7 @@ public class BikeLocationDto {
     private String bikeSerialNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss dd-MM-yyyy")
-    private LocalDateTime timeStamp;
+    private LocalDateTime timestamp;
 
     private String latitude;
 

@@ -1,4 +1,4 @@
-package com.example.rentalbike.config;
+package com.example.rentalbike.pageable;
 
 import com.example.rentalbike.annotation.MyPageable;
 import org.springframework.core.MethodParameter;
@@ -11,13 +11,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Optional;
 
-public class MyPageableDefaultConfig extends PageableHandlerMethodArgumentResolver {
+public class MyPageableDefaultResolver extends PageableHandlerMethodArgumentResolver {
 
-
-    @Override
-    public void setMaxPageSize(int maxPageSize) {
-        super.setMaxPageSize(50);
-    }
 
     @Override
     public Pageable resolveArgument(MethodParameter methodParameter, ModelAndViewContainer mavContainer,
@@ -28,14 +23,17 @@ public class MyPageableDefaultConfig extends PageableHandlerMethodArgumentResolv
 
 
         if (myPageable.isPresent()) {
-            int size;
-            size = myPageable.get().size() > myPageable.get().maxSize() ? myPageable.get().maxSize() : pageable.getPageSize();
+
+            int size = pageable.getPageSize() == 20 ? myPageable.get().size() : pageable.getPageSize();
+
+            if (size > myPageable.get().maxSize()) {
+                size = myPageable.get().maxSize();
+            } else if (size < myPageable.get().minSize()){
+                size = myPageable.get().minSize();
+            }
 
             pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
         }
-
-
-
 
         return pageable;
     }

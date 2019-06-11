@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface BikeLocationRepository extends JpaRepository<BikeLocation, Long> {
 
-    Collection<BikeLocation> findAllByRental_User_Username (String username);
+    List<BikeLocation> findAllByRental_User_Username (String username);
 
-    List<BikeLocation> findAllByRental_IdAndRental_User_Username(Long id, String username, Pageable pageable);
+    List<BikeLocation> findAllByRental_Id(Long id, Pageable pageable);
 
-    Collection<BikeLocation> findAllByBike_SerialNumberAndRental_User_Username (String serialNumber, String username);
+    List<BikeLocation> findAllByBike_SerialNumber (String serialNumber, Pageable pageable);
 
 }

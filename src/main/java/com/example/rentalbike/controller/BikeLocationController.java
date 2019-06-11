@@ -1,18 +1,24 @@
 package com.example.rentalbike.controller;
 
+import com.example.rentalbike.ApiResponse;
 import com.example.rentalbike.annotation.MyPageable;
 import com.example.rentalbike.app.security.CurrentUser;
 import com.example.rentalbike.dto.BikeLocationDto;
+import com.example.rentalbike.entity.BikeLocation;
+import com.example.rentalbike.entity.Rental;
 import com.example.rentalbike.mapper.BikeLocationMapper;
 import com.example.rentalbike.service.BikeLocationService;
+import com.example.rentalbike.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class BikeLocationController {
@@ -22,6 +28,9 @@ public class BikeLocationController {
     private BikeLocationMapper bikeLocationMapper;
 
     @Autowired
+    private RentalService rentalService;
+
+    @Autowired
     public BikeLocationController(CurrentUser currentUser, BikeLocationService bikeLocationService,
                                   BikeLocationMapper bikeLocationMapper) {
         this.currentUser = currentUser;
@@ -29,26 +38,38 @@ public class BikeLocationController {
         this.bikeLocationMapper = bikeLocationMapper;
     }
 
-    @GetMapping("/rentals/bikelocations/{username}")
-    public List<BikeLocationDto> findAllByRentalUserUsername (@PathVariable String username) {
+    @GetMapping("/user/rentals/{id}/locations")
+    public List<BikeLocationDto> findAllByCurrentUserRentalId (@MyPageable(size = 30, maxSize = 50) Pageable pageable, @PathVariable("id") Long id ) {
+        Rental rental = rentalService.findById(id);
 
         return bikeLocationMapper.toDtoList(
-                bikeLocationService.findAllByRentalUserUsername(username));
+                bikeLocationService.findAllByRental(rental, pageable));
     }
 
-    @GetMapping("/rentals/{id}/bikelocations/{username}")
-    public List<BikeLocationDto> findAllByRentalUserUsername (@MyPageable(maxSize = 25) Pageable pageable, @PathVariable("id") Long id, @PathVariable String username) {
+    @GetMapping("/rentals/{id}/locations") // ?size=100
+    public List<BikeLocationDto> findAllByRentalUserUsername (@MyPageable(size = 30, maxSize = 50) Pageable pageable, @PathVariable("id") Long id ) {
+        Rental rental = rentalService.findById(id);
 
         return bikeLocationMapper.toDtoList(
-                bikeLocationService.findAllByRentalIdAndUserUsername(pageable, id, username));
+                bikeLocationService.findAllByRental(rental, pageable));
     }
 
-    @GetMapping("/bikelocations/{serialnumber}/{username}")
-    public List<BikeLocationDto> findAllBySerialNumber (@PathVariable("serialnumber") String serialNumber,
-                                                 @PathVariable("username") String username) {
+    @GetMapping("/bikes/{serialnumber}/locations")
+    public List<BikeLocationDto> findAllBySerialNumber (@MyPageable Pageable pageable, @PathVariable("serialnumber") String serialNumber) {
 
-        return bikeLocationMapper.toDtoList(bikeLocationService.findAllBySerialNumber(serialNumber, username));
+        return bikeLocationMapper.toDtoList(bikeLocationService.findAllBySerialNumber(serialNumber, pageable));
     }
 
+    @PostMapping("/locations")
+    public BikeLocationDto add (@RequestBody BikeLocation bikeLocation) {
+        return bikeLocationMapper.toDto(bikeLocationService.add(bikeLocation));
+    }
+
+    @DeleteMapping("/locations/{id}")
+    public ResponseEntity<Object> remove (@PathVariable Long id) {
+        bikeLocationService.remove(id);
+
+        return ok(new ApiResponse(HttpStatus.OK.value(), "location removed"));
+    }
 
 }
