@@ -20,4 +20,5 @@ public class CurrentUserImpl implements CurrentUser {
     public User getUser() {
         return userRepository.findByUsername(SecurityUtils.getUsername()).orElseThrow(() -> new UserNotFoundException());
     }
+
 }

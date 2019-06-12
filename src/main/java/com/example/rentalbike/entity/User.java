@@ -1,11 +1,13 @@
 package com.example.rentalbike.entity;
 
+import com.example.rentalbike.annotation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,9 +22,11 @@ public class User extends AbstractEntity {
     @Column(unique = true)
     private String username;
 
+    @ValidPassword
     private String password;
 
     @Column(unique = true)
+    @Email
     private String email;
 
     @Column(name = "is_expired")

@@ -37,7 +37,7 @@ public class BikeLocationService {
         return bikeLocationRepository.findAllByRental_User_Username(currentUser.getUser().getUsername());
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username")
+    @PreAuthorize("isAuthenticated() and (hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username)")
     public List<BikeLocation> findAllByRental (Rental rental, Pageable pageable){
         return bikeLocationRepository.findAllByRental_Id(rental.getId(), pageable);
     }

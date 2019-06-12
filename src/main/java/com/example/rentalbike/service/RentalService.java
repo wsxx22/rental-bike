@@ -28,7 +28,7 @@ public class RentalService {
         return rentalRepository.findByBike_SerialNumber(serialNumber);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username")
+    @PreAuthorize("isAuthenticated() and (hasRole('ROLE_ADMIN') or #rental.user.username == authentication.principal.username)")
     public Rental add (Rental rental) {
         return rentalRepository.save(rental);
     }

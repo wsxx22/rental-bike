@@ -134,6 +134,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
 
     </dependencies>
 

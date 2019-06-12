@@ -1,14 +1,17 @@
 package com.example.rentalbike.controller;
 
 
+import com.example.rentalbike.ApiResponse;
 import com.example.rentalbike.app.security.CurrentUser;
 import com.example.rentalbike.dto.AuthenticatedUserDto;
+import com.example.rentalbike.dto.UpdateUserDto;
 import com.example.rentalbike.dto.UserDto;
 import com.example.rentalbike.entity.User;
 import com.example.rentalbike.mapper.UserMapper;
 import com.example.rentalbike.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +37,9 @@ public class UserController {
     }
 
     @PatchMapping("/users/{username}")
-    public UserDto updateUser (@PathVariable String username, @RequestBody User user) {
-        return userMapper.toDto(userService.update(username, user));
+    public UserDto updateUser (@PathVariable String username, @RequestBody UpdateUserDto updateUserDto) {
+
+        return userMapper.toDto(userService.update(username, updateUserDto));
     }
 
     @GetMapping("/users")
@@ -44,8 +48,9 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{username}")
-    public long deleteByUsername (@PathVariable String username) {
-        return userService.deleteByUsername(username);
+    public ResponseEntity<Object> deleteByUsername (@PathVariable String username) {
+        userService.deleteByUsername(username);
+        return ResponseEntity.status(200).body(new ApiResponse(200, "account deleted"));
     }
 
     @GetMapping("/user")
@@ -53,8 +58,5 @@ public class UserController {
         return userMapper.toAuthenticatedDto(currentUser.getUser());
     }
 
-    //user delete
-
-    //user patch
 
 }

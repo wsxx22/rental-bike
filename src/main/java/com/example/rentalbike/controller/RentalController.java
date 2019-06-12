@@ -3,6 +3,7 @@ package com.example.rentalbike.controller;
 import com.example.rentalbike.app.security.CurrentUser;
 import com.example.rentalbike.dto.RentalDto;
 import com.example.rentalbike.entity.Rental;
+import com.example.rentalbike.entity.User;
 import com.example.rentalbike.mapper.RentalMapper;
 import com.example.rentalbike.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;

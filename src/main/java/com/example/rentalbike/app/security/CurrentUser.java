@@ -8,4 +8,5 @@ public interface CurrentUser {
 
     @PreAuthorize("isAuthenticated()")
     User getUser();
+
 }
