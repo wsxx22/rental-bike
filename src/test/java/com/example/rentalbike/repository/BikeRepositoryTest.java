@@ -8,8 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
 import java.util.Collection;
@@ -33,16 +35,15 @@ public class BikeRepositoryTest {
     @Autowired
     private BikeRepository bikeRepository;
 
-    private Pageable pageRequest;
-
     @BeforeAll
-    public void setup() {
-        pageRequest = mock(Pageable.class);
+    private void setup() {
+        bikeRepository.deleteAll();
     }
-
 
     @Test
     public void shouldReturnBikeWhenTakenIsFalse() {
+
+        bikeRepository.findAll().forEach(bike -> testEntityManager.remove(bike));
 
         //given
         List<Bike> bikes = prepareListBikesInRental();
@@ -52,7 +53,7 @@ public class BikeRepositoryTest {
         });
 
         //when
-        Collection<Bike> bikeResult = bikeRepository.findAllByIsTaken(false, pageRequest);
+        List<Bike> bikeResult = bikeRepository.findAllByIsTaken(false, PageRequest.of(0,50));
 
         //then
         assertThat(bikeResult, hasSize(2));

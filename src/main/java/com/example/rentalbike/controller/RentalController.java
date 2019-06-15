@@ -8,6 +8,7 @@ import com.example.rentalbike.mapper.RentalMapper;
 import com.example.rentalbike.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class RentalController {
         this.currentUser = currentUser;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/user/rentals")
     public List<RentalDto> getAuthenticatedUserRentals(){
         return rentalMapper.toDtoList(currentUser.getUser().getRentals());

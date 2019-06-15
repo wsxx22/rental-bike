@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Data
 public class RentalDto {
 
+    private Long id;
+
     private Long userId;
 
     private String bikeSerialNumber;
